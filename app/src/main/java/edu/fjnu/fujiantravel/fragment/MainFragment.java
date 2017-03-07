@@ -1,0 +1,86 @@
+package edu.fjnu.fujiantravel.fragment;
+
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import edu.fjnu.fujiantravel.R;
+import edu.fjnu.fujiantravel.activity.ChooseActivity;
+import edu.fjnu.fujiantravel.activity.tourist.MakeOrderActivity;
+import edu.fjnu.fujiantravel.activity.tourist.QuickOrderActivity;
+import edu.fjnu.fujiantravel.activity.tourist.SearchScenicActivity;
+
+/**
+ * Created by Administrator on 2017/2/1 0001.
+ */
+public class MainFragment extends Fragment implements View.OnClickListener {
+    private View view;
+    private Context context;
+
+    private WebView webView;
+    private ImageButton changebutton;
+    private ImageButton infobutton;
+    private TextView search;
+
+    private Button button1;
+    private Button button2;
+    private Button button3;
+    private Button button4;
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        context = getActivity();
+        view = inflater.inflate(R.layout.main_fragment, container, false);
+        findview();
+        initview();
+        return view;
+    }
+
+    private void findview() {
+        webView = (WebView) view.findViewById(R.id.tourist_mainweb);
+        changebutton = (ImageButton) view.findViewById(R.id.modelchangebutton);
+        infobutton = (ImageButton) view.findViewById(R.id.tourist_messagebutton);
+        search = (TextView) view.findViewById(R.id.tourist_search);
+        button1 = (Button) view.findViewById(R.id.tourist_button1);
+        button2 = (Button) view.findViewById(R.id.tourist_button2);
+        button3 = (Button) view.findViewById(R.id.tourist_button3);
+        button4 = (Button) view.findViewById(R.id.tourist_button4);
+    }
+
+    private void initview() {
+        changebutton.setOnClickListener(this);
+        search.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
+    }
+
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        switch (v.getId()) {
+            case R.id.modelchangebutton:
+                intent.setClass(context, ChooseActivity.class);
+                getActivity().finish();
+                break;
+            case R.id.tourist_button3:
+                intent.setClass(context, MakeOrderActivity.class);
+                context.startActivity(intent);
+                break;
+            case R.id.tourist_button4:
+                intent.setClass(context, QuickOrderActivity.class);
+                context.startActivity(intent);
+                break;
+            case R.id.tourist_search:
+                intent.setClass(context, SearchScenicActivity.class);
+                context.startActivity(intent);
+                break;
+        }
+    }
+}

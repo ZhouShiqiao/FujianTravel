@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.RegisterActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/lightskyblue"
+        android:layout_alignParentTop="true"
+        android:id="@+id/register_toolbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="用户注册"
+            android:layout_centerInParent="true"
+            android:textSize="18dp"
+            android:gravity="center"/>
+    </RelativeLayout>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:id="@+id/register_id"
+android:hint="请输入用户名：（长度6-18位）"
+android:layout_margin="15dp"
+android:textSize="18sp"
+    android:layout_below="@id/register_toolbar"/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:id="@+id/register_passwd1"
+android:hint="请输入密码："
+android:inputType="textPassword"
+android:layout_below="@+id/register_id"
+android:layout_margin="15dp"
+android:textSize="18sp"/>
+<EditText
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:id="@+id/register_passwd2"
+android:hint="请确认你的密码："
+android:inputType="textPassword"
+android:layout_below="@+id/register_passwd1"
+android:layout_margin="15dp"
+android:textSize="18sp"/>
+<Button
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="注册"
+android:layout_below="@+id/register_passwd2"
+android:layout_centerHorizontal="true"
+android:id="@+id/register_button"
+    />
+</RelativeLayout>
