@@ -1,5 +1,8 @@
 package edu.fjnu.fujiantravel.order;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import edu.fjnu.fujiantravel.message.Client;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.message.MyMessage;
@@ -29,18 +32,21 @@ public class OrderThread extends Thread {
     private String address;
     private int port;
 
+    private Context context;
+
     public OrderThread() {
 
     }
 
-    public OrderThread(int type, Order order, String address, int port) {
+    public OrderThread(int type, Order order, String address, int port, Context context) {
         this.type = type;
         this.order = order;
         this.address = address;
         this.port = port;
+        this.context = context;
     }
 
-    public OrderThread(int type, OrderUpdate orderupdate, String address, int port) {
+    public OrderThread(int type, OrderUpdate orderupdate, String address, int port, Context context) {
         this.type = type;
         this.orderupdate = orderupdate;
         this.address = address;
@@ -69,6 +75,7 @@ public class OrderThread extends Thread {
                     socket.close();
                     out.close();
                     in.close();
+                  //  Toast.makeText(context, "订单创建成功", Toast.LENGTH_SHORT).show();
                     break;
             }
         } catch (IOException e) {

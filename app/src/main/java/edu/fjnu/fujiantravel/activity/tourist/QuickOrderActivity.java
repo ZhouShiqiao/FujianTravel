@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.order.Order;
 import edu.fjnu.fujiantravel.order.OrderThread;
+import edu.fjnu.fujiantravel.user.Tourist;
 import edu.fjnu.fujiantravel.user.User;
 
 import java.util.HashMap;
@@ -92,10 +94,14 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
             case R.id.quickorder_createorder:
                 if (TouristActivity.whetherlog)
                     this.user = TouristActivity.getUser();
-                else
+                else {
+                    Toast.makeText(this, "还没有登陆，请先登陆！", Toast.LENGTH_SHORT).show();
+                    intent.setClass(this, TouristLogActivity.class);
+                    startActivity(intent);
                     return;
+                }
                 createorder();
-                Thread thread = new Thread(new OrderThread(Order.CREATEORDER, order, address, port));
+                Thread thread = new Thread(new OrderThread(Order.CREATEORDER, order, address, port, QuickOrderActivity.this));
                 thread.start();
                 break;
             case R.id.quickorder_choosesenic:

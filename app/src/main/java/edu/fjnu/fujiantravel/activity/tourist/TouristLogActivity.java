@@ -114,8 +114,6 @@ public class TouristLogActivity extends AppCompatActivity implements Runnable {
             System.out.println(msg.what);
             switch (msg.what) {
                 case Tourist.LOG_SUCCESS:
-                    toast = Toast.makeText(TouristLogActivity.this, "登陆成功！", Toast.LENGTH_SHORT);
-                    toast.show();
                     User user = new User();
                     String str = TouristLogActivity.this.msg.getdetail();
                     user = (User) Json.JsontoObject(str, user.getClass());
@@ -123,6 +121,8 @@ public class TouristLogActivity extends AppCompatActivity implements Runnable {
                     TouristActivity.user = user;
                     PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
                             Utils.getMetaValue(TouristLogActivity.this, "api_key"));
+                    toast = Toast.makeText(TouristLogActivity.this, "登陆成功！", Toast.LENGTH_SHORT);
+                    toast.show();
                     finish();
                     break;
                 case User.LOG_ERROR:

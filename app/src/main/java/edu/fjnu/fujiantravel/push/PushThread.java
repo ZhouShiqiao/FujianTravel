@@ -1,9 +1,15 @@
 package edu.fjnu.fujiantravel.push;
 
+import android.content.Context;
+
+import com.baidu.android.pushservice.PushManager;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.fjnu.fujiantravel.message.Client;
 import edu.fjnu.fujiantravel.message.Json;
@@ -28,11 +34,14 @@ public class PushThread extends Thread {
     private String JsonStr;
     private String reJsonStr;
 
-    public PushThread(int type, PushMessage msg, String address, int port) {
+    private Context context;
+
+    public PushThread(int type, PushMessage msg, String address, int port,Context context) {
         this.type = type;
         this.pushmessage = msg;
         this.address = address;
         this.port = port;
+        this.context=context;
     }
 
     public void run() {
@@ -53,11 +62,6 @@ public class PushThread extends Thread {
             switch (head) {
                 case PushMessage.PUSHBIND_SUCCESS:
                     bindsuccess();
-                    out.writeUTF(reJsonStr);
-                    out.flush();
-                    socket.close();
-                    out.close();
-                    in.close();
                     break;
                 case PushMessage.PUSHBIND_ERROR:
                     socket.close();
@@ -76,9 +80,18 @@ public class PushThread extends Thread {
         JsonStr = Json.ObjecttoJson(msg);
     }
 
-    private void bindsuccess() {
+    private void bindsuccess() throws IOException{
         remsg.sethead(Client.CLINT_FINISH);
         remsg.setdetail(null);
         reJsonStr = Json.ObjecttoJson(remsg);
+        out.writeUTF(reJsonStr);
+        out.flush();
+        socket.close();
+        out.close();
+        in.close();
+        List<String> tags = new ArrayList<>();
+        tags.add("tourist");
+        tags.add("guide");
+        PushManager.setTags(context.getApplicationContext(), tags);
     }
 }

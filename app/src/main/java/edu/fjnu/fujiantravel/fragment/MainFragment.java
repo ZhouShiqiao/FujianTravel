@@ -9,17 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import java.sql.BatchUpdateException;
 
 import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.activity.ChooseActivity;
 import edu.fjnu.fujiantravel.activity.tourist.MakeOrderActivity;
 import edu.fjnu.fujiantravel.activity.tourist.QuickOrderActivity;
-import edu.fjnu.fujiantravel.activity.tourist.SearchScenicActivity;
 
 /**
- * Created by Administrator on 2017/2/1 0001.
+ * Created by Administrator on 2017/3/15 0015.
  */
 public class MainFragment extends Fragment implements View.OnClickListener {
     private View view;
@@ -28,7 +30,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     private WebView webView;
     private ImageButton changebutton;
     private ImageButton infobutton;
-    private TextView search;
+    private TextView searchView;
 
     private Button button1;
     private Button button2;
@@ -43,42 +45,34 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         initview();
         return view;
     }
-
-    private void findview() {
-        webView = (WebView) view.findViewById(R.id.tourist_mainweb);
-        changebutton = (ImageButton) view.findViewById(R.id.modelchangebutton);
-        infobutton = (ImageButton) view.findViewById(R.id.tourist_messagebutton);
-        search = (TextView) view.findViewById(R.id.tourist_search);
-        button1 = (Button) view.findViewById(R.id.tourist_button1);
-        button2 = (Button) view.findViewById(R.id.tourist_button2);
-        button3 = (Button) view.findViewById(R.id.tourist_button3);
-        button4 = (Button) view.findViewById(R.id.tourist_button4);
+    private void findview(){
+        webView=(WebView)view.findViewById(R.id.tourist_mainweb);
+        changebutton=(ImageButton)view.findViewById(R.id.modelchangebutton);
+        infobutton=(ImageButton)view.findViewById(R.id.tourist_messagebutton);
+        searchView=(TextView) view.findViewById(R.id.tourist_search);
+        button1=(Button)view.findViewById(R.id.tourist_button1);
+        button2=(Button)view.findViewById(R.id.tourist_button2);
+        button3=(Button)view.findViewById(R.id.tourist_button3);
+        button4=(Button)view.findViewById(R.id.tourist_button4);
     }
-
-    private void initview() {
+    private void initview(){
         changebutton.setOnClickListener(this);
-        search.setOnClickListener(this);
         button3.setOnClickListener(this);
         button4.setOnClickListener(this);
     }
-
-    public void onClick(View v) {
+    public void onClick(View v){
         Intent intent = new Intent();
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.modelchangebutton:
-                intent.setClass(context, ChooseActivity.class);
+                intent.setClass(context,ChooseActivity.class);
                 getActivity().finish();
                 break;
             case R.id.tourist_button3:
-                intent.setClass(context, MakeOrderActivity.class);
+                intent.setClass(context,MakeOrderActivity.class);
                 context.startActivity(intent);
                 break;
             case R.id.tourist_button4:
-                intent.setClass(context, QuickOrderActivity.class);
-                context.startActivity(intent);
-                break;
-            case R.id.tourist_search:
-                intent.setClass(context, SearchScenicActivity.class);
+                intent.setClass(context,QuickOrderActivity.class);
                 context.startActivity(intent);
                 break;
         }

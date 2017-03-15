@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import edu.fjnu.fujiantravel.fragment.TouristFragment;
 import edu.fjnu.fujiantravel.fragment.MainFragment;
+import edu.fjnu.fujiantravel.fragment.TouristFragment;
 import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.user.User;
 

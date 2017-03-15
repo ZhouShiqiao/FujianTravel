@@ -24,6 +24,33 @@ public class Order {
     public final static int QUERYORDER_SUCCESS = 220;
     public final static int QUERYORDER_ERROR = 221;
 
+    // order begin
+    public final static int BEGINORDER = 23;
+    public final static int BEGINORDER_SUCCESS = 230;
+    public final static int BEGINORDER_ERROR = 231;
+
+    // order push
+    public final static int PUSHORDER = 24;
+    public final static int PUSHORDERSUCCESS = 240;
+    public final static int PUSHORDERTOTOURIST = 241;
+    public final static int PUSHORDERTOGUIDE = 242;
+
+    // order cancel
+    public final static int CANCELORDER = 25;
+    public final static int CANCELORDERSUCCESS = 250;
+    public final static int CANCELORDERERROR = 251;
+
+    // order receive
+    public final static int RECEIVEORDER = 26;
+    public final static int RECEIVEORDERSUCCESS = 260;
+    public final static int RECEIVEORDERERROR = 261;
+
+    // order ensure
+    public final static int ENSUREORDER = 27;
+    public final static int ENSUREORDER_SUCCESS = 270;
+    public final static int ENSUREORDER_ERROR = 271;
+
+
     private String orderid;
     private String touristid;
     private String guideid;

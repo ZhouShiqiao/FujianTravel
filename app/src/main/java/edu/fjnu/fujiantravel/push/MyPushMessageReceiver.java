@@ -9,6 +9,7 @@ import com.baidu.android.pushservice.PushMessageReceiver;
 
 import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.activity.tourist.TouristActivity;
+import edu.fjnu.fujiantravel.notification.NotificationFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +44,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
     @Override
     public void onBind(Context context, int errorCode, String appid,
                        String userId, String channelId, String requestId) {
-        String responseString = "onBind errorCode=" + errorCode + " appid="
+        /*String responseString = "onBind errorCode=" + errorCode + " appid="
                 + appid + " userId=" + userId + " channelId=" + channelId
                 + " requestId=" + requestId;
         Log.d(TAG, responseString);
@@ -53,8 +54,8 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             Log.d(TAG, "绑定成功");
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-        updateContent(context, responseString);
-        /*PushMessage msg = new PushMessage();
+        updateContent(context, responseString);*/
+        PushMessage msg = new PushMessage();
         msg.setappId(appid);
         msg.setchannelId(channelId);
         msg.setrequestId(requestId);
@@ -62,8 +63,8 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         msg.setid(TouristActivity.getUser().getid());
         Thread thread = new Thread(new PushThread(PushMessage.PUSHBIND, msg,
                 context.getString(R.string.server_address),
-                Integer.parseInt(context.getString(R.string.server_port))));
-        thread.start();*/
+                Integer.parseInt(context.getString(R.string.server_port)),context));
+        thread.start();
     }
 
     /**
@@ -95,8 +96,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             }
         }
 
-        // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
-        updateContent(context, messageString);
+        NotificationFactory.getinstance().getNotification(customContentString,context);
     }
 
     /**
@@ -175,7 +175,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
      *
      * @param context     上下文
      * @param errorCode   错误码。0表示某些tag已经设置成功；非0表示所有tag的设置均失败。
-     * @param successTags 设置成功的tag
+     * @param sucessTags 设置成功的tag
      * @param failTags    设置失败的tag
      * @param requestId   分配给对云推送的请求的id
      */
@@ -196,7 +196,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
      *
      * @param context     上下文
      * @param errorCode   错误码。0表示某些tag已经删除成功；非0表示所有tag均删除失败。
-     * @param successTags 成功删除的tag
+     * @param sucessTags 成功删除的tag
      * @param failTags    删除失败的tag
      * @param requestId   分配给对云推送的请求的id
      */
