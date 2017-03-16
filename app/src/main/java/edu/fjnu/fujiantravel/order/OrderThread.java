@@ -43,12 +43,13 @@ public class OrderThread extends Thread {
 
     }
 
-    public OrderThread(int type, Order order, String address, int port, Context context) {
+    public OrderThread(int type, Order order, String address, int port, Context context,Handler handler) {
         this.type = type;
         this.order = order;
         this.address = address;
         this.port = port;
         this.context = context;
+        this.handler= handler;
     }
 
     public OrderThread(int type, OrderUpdate orderupdate, String address, int port, Context context) {
@@ -77,8 +78,8 @@ public class OrderThread extends Thread {
                 case Order.CREATEORDER:
                     createorder();
                     break;
-                case Order.QUERYORDER:
-                    queryorder();
+                case Order.QUERYORDER_SINGLE:
+                    querysingleorder();
                     break;
             }
             reJsonStr = in.readUTF();
@@ -90,6 +91,12 @@ public class OrderThread extends Thread {
                     break;
                 case Order.QUERYORDER_SUCCESS:
                     queryordersuccess();
+                    break;
+                case Order.CREATRORDER_ERROR:
+                    createordererror();
+                    break;
+                case Order.QUERYORDER_ERROR:
+                    queryordererror();
                     break;
             }
         } catch (IOException e) {
@@ -105,8 +112,8 @@ public class OrderThread extends Thread {
         out.flush();
     }
 
-    private void queryorder() throws IOException {
-        this.msg.sethead(Order.QUERYORDER);
+    private void querysingleorder() throws IOException {
+        this.msg.sethead(Order.QUERYORDER_SINGLE);
         this.msg.setdetail(orderid);
         this.JsonStr = Json.ObjecttoJson(msg);
         out.writeUTF(JsonStr);
@@ -114,14 +121,28 @@ public class OrderThread extends Thread {
     }
 
     private void createordersuccess() throws IOException {
-        Toast.makeText(context, "订单创建成功，等待导游接单。", Toast.LENGTH_SHORT).show();
+        Message message = new Message();
+        message.what= Order.CREATRORDER_SUCCESS;
+        handler.sendMessage(message);
+        clientover();
+    }
+    private void createordererror()throws IOException{
+        Message message = new Message();
+        message.what=Order.CREATRORDER_ERROR;
+        handler.sendMessage(message);
         clientover();
     }
 
     private void queryordersuccess() throws IOException {
+        clientover();
         Message message = new Message();
-        message.what = msg.gethead();
-        message.obj = msg.getdetail();
+        message.what = remsg.gethead();
+        message.obj = remsg.getdetail();
+        handler.sendMessage(message);
+    }
+    private void queryordererror()throws IOException{
+        Message message = new Message();
+        message.what = Order.QUERYORDER_ERROR;
         handler.sendMessage(message);
         clientover();
     }

@@ -66,9 +66,26 @@ public class Order {
     private int peoplenumbers;
     private int playtime;
     private List<OrderDetail> detail;
+    private String begintime;
+    private String senic;
 
     public Order() {
 
+    }
+    public void setsenic(String senic) {
+        this.senic = senic;
+    }
+
+    public String getsenic() {
+        return this.senic;
+    }
+
+    public void setbegintime(String begintime) {
+        this.begintime = begintime;
+    }
+
+    public String getbegintime() {
+        return this.begintime;
     }
 
     public void setdetail(List<OrderDetail> detail) {

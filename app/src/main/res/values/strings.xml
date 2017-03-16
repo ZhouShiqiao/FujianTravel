@@ -9,4 +9,5 @@
     <string name="order_notify_ticker">有新的订单消息</string>
     <string name="simple_order_info_cancelbutton">忽略</string>
     <string name="simple_order_info_ensurebutton">接单</string>
+    <string name="now_time">0000-00-00 00:00:00</string>
 </resources>

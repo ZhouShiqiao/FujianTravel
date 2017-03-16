@@ -1,6 +1,8 @@
 package edu.fjnu.fujiantravel.activity.tourist;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.fjnu.fujiantravel.R;
+import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.order.Order;
 import edu.fjnu.fujiantravel.order.OrderThread;
 import edu.fjnu.fujiantravel.user.Tourist;
@@ -101,7 +104,7 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
                     return;
                 }
                 createorder();
-                Thread thread = new Thread(new OrderThread(Order.CREATEORDER, order, address, port, QuickOrderActivity.this));
+                Thread thread = new Thread(new OrderThread(Order.CREATEORDER, order, address, port, QuickOrderActivity.this, handler));
                 thread.start();
                 break;
             case R.id.quickorder_choosesenic:
@@ -138,7 +141,7 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
 
     private void createorder() {
         this.order = new Order();
-        order.setorderid("1");
+        order.setorderid("2");
         order.settouristid(user.getid());
         order.settype(0);
         order.setstate(1);
@@ -147,4 +150,17 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
         order.setremark(remark.getText().toString());
     }
 
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Order.CREATRORDER_SUCCESS:
+                    Toast.makeText(QuickOrderActivity.this, "订单创建成功，等待导游接单。", Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+                case Order.CREATRORDER_ERROR:
+                    Toast.makeText(QuickOrderActivity.this, "订单创建失败。", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 }
