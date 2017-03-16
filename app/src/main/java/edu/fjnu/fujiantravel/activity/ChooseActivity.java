@@ -23,8 +23,6 @@ public class ChooseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose);
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
-                Utils.getMetaValue(this, "api_key"));
         findview();
         initview();
     }

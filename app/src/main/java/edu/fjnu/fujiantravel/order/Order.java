@@ -23,6 +23,7 @@ public class Order {
     public final static int QUERYORDER_GUIDE = 229;
     public final static int QUERYORDER_SUCCESS = 220;
     public final static int QUERYORDER_ERROR = 221;
+    public final static int QUERYORDER_SINGLE = 227;
 
     // order begin
     public final static int BEGINORDER = 23;

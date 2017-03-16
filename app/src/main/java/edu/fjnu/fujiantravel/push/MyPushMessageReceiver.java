@@ -1,15 +1,24 @@
 package edu.fjnu.fujiantravel.push;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
+import com.baidu.mapapi.common.SysOSUtil;
 
 import edu.fjnu.fujiantravel.R;
+import edu.fjnu.fujiantravel.activity.OrderSimpleInfoActivity;
 import edu.fjnu.fujiantravel.activity.tourist.TouristActivity;
+import edu.fjnu.fujiantravel.message.Json;
+import edu.fjnu.fujiantravel.message.MyMessage;
+import edu.fjnu.fujiantravel.notification.MyNotification;
 import edu.fjnu.fujiantravel.notification.NotificationFactory;
+import edu.fjnu.fujiantravel.order.Order;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -96,7 +105,7 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
             }
         }
 
-        NotificationFactory.getinstance().getNotification(customContentString,context);
+        NotificationFactory.getinstance().getNotification(message,context);
     }
 
     /**

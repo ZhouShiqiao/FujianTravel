@@ -7,4 +7,6 @@
     <string name="order_notify_title">订单通知</string>
     <string name="new_order_notify_guide">有游客正在招募导游</string>
     <string name="order_notify_ticker">有新的订单消息</string>
+    <string name="simple_order_info_cancelbutton">忽略</string>
+    <string name="simple_order_info_ensurebutton">接单</string>
 </resources>

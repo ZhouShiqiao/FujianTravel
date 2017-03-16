@@ -1,6 +1,9 @@
 package edu.fjnu.fujiantravel.order;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
 import edu.fjnu.fujiantravel.message.Client;
@@ -23,6 +26,7 @@ public class OrderThread extends Thread {
     private int type;
     private Order order;
     private OrderUpdate orderupdate;
+    private String orderid;
 
     private MyMessage msg = new MyMessage();
     private MyMessage remsg = new MyMessage();
@@ -33,6 +37,7 @@ public class OrderThread extends Thread {
     private int port;
 
     private Context context;
+    private Handler handler;
 
     public OrderThread() {
 
@@ -51,6 +56,16 @@ public class OrderThread extends Thread {
         this.orderupdate = orderupdate;
         this.address = address;
         this.port = port;
+        this.context = context;
+    }
+
+    public OrderThread(int type, String orderid, String address, int port, Context context, Handler handler) {
+        this.type = type;
+        this.orderid = orderid;
+        this.address = address;
+        this.port = port;
+        this.context = context;
+        this.handler = handler;
     }
 
     public void run() {
@@ -62,20 +77,19 @@ public class OrderThread extends Thread {
                 case Order.CREATEORDER:
                     createorder();
                     break;
+                case Order.QUERYORDER:
+                    queryorder();
+                    break;
             }
             reJsonStr = in.readUTF();
             remsg = (MyMessage) Json.JsontoObject(reJsonStr, msg.getClass());
             int head = remsg.gethead();
             switch (head) {
                 case Order.CREATRORDER_SUCCESS:
-                    msg.sethead(Client.CLINT_FINISH);
-                    msg.setdetail(null);
-                    out.writeUTF(Json.ObjecttoJson(msg));
-                    out.flush();
-                    socket.close();
-                    out.close();
-                    in.close();
-                  //  Toast.makeText(context, "订单创建成功", Toast.LENGTH_SHORT).show();
+                    createordersuccess();
+                    break;
+                case Order.QUERYORDER_SUCCESS:
+                    queryordersuccess();
                     break;
             }
         } catch (IOException e) {
@@ -89,5 +103,36 @@ public class OrderThread extends Thread {
         this.JsonStr = Json.ObjecttoJson(msg);
         out.writeUTF(JsonStr);
         out.flush();
+    }
+
+    private void queryorder() throws IOException {
+        this.msg.sethead(Order.QUERYORDER);
+        this.msg.setdetail(orderid);
+        this.JsonStr = Json.ObjecttoJson(msg);
+        out.writeUTF(JsonStr);
+        out.flush();
+    }
+
+    private void createordersuccess() throws IOException {
+        Toast.makeText(context, "订单创建成功，等待导游接单。", Toast.LENGTH_SHORT).show();
+        clientover();
+    }
+
+    private void queryordersuccess() throws IOException {
+        Message message = new Message();
+        message.what = msg.gethead();
+        message.obj = msg.getdetail();
+        handler.sendMessage(message);
+        clientover();
+    }
+
+    private void clientover() throws IOException {
+        msg.sethead(Client.CLINT_FINISH);
+        msg.setdetail(null);
+        out.writeUTF(Json.ObjecttoJson(msg));
+        out.flush();
+        socket.close();
+        out.close();
+        in.close();
     }
 }

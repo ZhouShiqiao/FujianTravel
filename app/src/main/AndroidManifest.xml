@@ -48,7 +48,7 @@
 
     <permission
         android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.edu.fjnu.fujiantravel"
-        android:protectionLevel="normal"></permission>
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -78,7 +78,7 @@
         <activity android:name=".activity.tourist.QuickOrderActivity" />
         <activity android:name=".activity.tourist.OrderSearchScenicActivity" />
         <activity android:name=".activity.guide.GuideInfoActivity" />
-        <activity android:name=".activity.tourist.ChooseLocationActivity"></activity>
+        <activity android:name=".activity.tourist.ChooseLocationActivity" />
         <!-- push应用定义消息receiver声明 -->
         <receiver android:name=".push.MyPushMessageReceiver">
             <intent-filter>
@@ -146,7 +146,8 @@
             android:name="api_key"
             android:value="1VFdaKh0QSCbPvKE9Uq26V8n" />
 
-        <activity android:name=".activity.OrderSimpleInfoActivity"></activity>
+        <activity android:name=".activity.OrderSimpleInfoActivity" />
+        <activity android:name=".activity.SimpleUserInfoActivity"></activity>
     </application>
 
 </manifest>

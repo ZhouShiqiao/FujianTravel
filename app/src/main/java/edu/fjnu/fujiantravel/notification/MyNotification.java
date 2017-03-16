@@ -90,7 +90,7 @@ public class MyNotification {
     }
 
     //设置通知小ICON
-    public void SmallIcon(int res) {
+    public void setSmallIcon(int res) {
         this.mBuilder.setSmallIcon(res);
     }
 

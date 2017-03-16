@@ -42,6 +42,7 @@ public class NotificationFactory {
         notification.setAutoCancel(true);
         notification.setTicker(context.getString(R.string.order_notify_ticker));
         notification.setContentText(context.getString(R.string.new_order_notify_guide));
+        notification.setSmallIcon(R.mipmap.ic_launcher);
 
         Intent intent = new Intent().setClass(context, OrderSimpleInfoActivity.class);
         Bundle bundle = new Bundle();
