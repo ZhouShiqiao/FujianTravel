@@ -7,6 +7,8 @@
     <string name="order_notify_title">订单通知</string>
     <string name="new_order_notify_guide">有游客正在招募导游</string>
     <string name="order_notify_ticker">有新的订单消息</string>
+    <string name="order_receive_ticker">有导游接受您的订单</string>
+    <string name="order_receive_notify_tourist">您的订单已被接受，请注意与导游联系</string>
     <string name="simple_order_info_cancelbutton">忽略</string>
     <string name="simple_order_info_ensurebutton">接单</string>
     <string name="now_time">0000-00-00 00:00:00</string>

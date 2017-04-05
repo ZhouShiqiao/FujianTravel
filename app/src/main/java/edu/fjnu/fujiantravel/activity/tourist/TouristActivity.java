@@ -28,6 +28,8 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
     private Button infobutton = null;
     private Button mainbutton = null;
 
+    public static TouristActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,12 +37,13 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
         findview();
         initview();
         setDefaultFragment();
+        instance = this;
     }
 
     private void findview() {
         framelayout = (FrameLayout) findViewById(R.id.tourist_content);
         infobutton = (Button) findViewById(R.id.tourist_infobutton);
-        mainbutton=(Button)findViewById(R.id.tourist_mainbutton);
+        mainbutton = (Button) findViewById(R.id.tourist_mainbutton);
     }
 
     private void initview() {
@@ -52,10 +55,12 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
         TouristActivity.user = user;
         TouristActivity.whetherlog = true;
     }
-    public static Boolean whetherlog(){
+
+    public static Boolean whetherlog() {
         return whetherlog;
     }
-    public static User getUser(){
+
+    public static User getUser() {
         return user;
     }
 
@@ -63,7 +68,7 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
     private void setDefaultFragment() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        mainfragment=new MainFragment();
+        mainfragment = new MainFragment();
         transaction.replace(R.id.tourist_content, mainfragment);
         transaction.commit();
     }
@@ -89,12 +94,13 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
         transaction.commit();
 
     }
+
     /*
     重写返回键
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-            if((System.currentTimeMillis()-exitTime) > 2000){
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {

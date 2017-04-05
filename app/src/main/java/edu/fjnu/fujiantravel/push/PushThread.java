@@ -89,9 +89,9 @@ public class PushThread extends Thread {
         socket.close();
         out.close();
         in.close();
-        List<String> tags = new ArrayList<>();
+        /*List<String> tags = new ArrayList<>();
         tags.add("tourist");
         tags.add("guide");
-        PushManager.setTags(context.getApplicationContext(), tags);
+        PushManager.setTags(context.getApplicationContext(), tags);*/
     }
 }

@@ -1,5 +1,6 @@
 package edu.fjnu.fujiantravel.activity;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +19,7 @@ import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.order.Order;
 import edu.fjnu.fujiantravel.order.OrderThread;
+import edu.fjnu.fujiantravel.order.OrderUpdate;
 
 public class OrderSimpleInfoActivity extends AppCompatActivity implements View.OnClickListener {
     private Map<String, TextView> TextViewMap = new HashMap<>();
@@ -86,6 +86,14 @@ public class OrderSimpleInfoActivity extends AppCompatActivity implements View.O
                 this.finish();
                 break;
             case R.id.simpleorderinfo_ensurebutton:
+                OrderUpdate update = new OrderUpdate();
+                update.setorderID(id);
+                update.sethead("guideID");
+                update.setdetail("zsq0823");
+                Thread thread = new Thread(new OrderThread(Order.RECEIVEORDER, update,
+                        getString(R.string.server_address), Integer.parseInt(getString(R.string.server_port)),
+                        OrderSimpleInfoActivity.this, handler));
+                thread.start();
                 break;
         }
     }
@@ -101,8 +109,19 @@ public class OrderSimpleInfoActivity extends AppCompatActivity implements View.O
                 case Order.QUERYORDER_ERROR:
                     Toast.makeText(OrderSimpleInfoActivity.this, "订单信息加载失败", Toast.LENGTH_SHORT).show();
                     break;
+                case Order.UPDATEORDRE_SUCCESS:
+                    Toast.makeText(OrderSimpleInfoActivity.this, "接单成功请与游客联系", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent();
+                    intent.setClass(OrderSimpleInfoActivity.this,SimpleUserInfoActivity.class);
+                    startActivity(intent);
+                    finish();
+                    break;
+                case Order.UPDATEORDER_ERROR:
+                    Toast.makeText(OrderSimpleInfoActivity.this, "接单失败", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
 
 }
+

@@ -11,10 +11,15 @@ import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+
+import edu.fjnu.fujiantravel.activity.LoadActivity;
 import edu.fjnu.fujiantravel.message.Client;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.message.MyMessage;
 import edu.fjnu.fujiantravel.R;
+import edu.fjnu.fujiantravel.push.MyPushMessageReceiver;
+import edu.fjnu.fujiantravel.push.PushMessage;
+import edu.fjnu.fujiantravel.push.PushThread;
 import edu.fjnu.fujiantravel.push.Utils;
 import edu.fjnu.fujiantravel.user.Guide;
 import edu.fjnu.fujiantravel.user.Tourist;
@@ -121,6 +126,10 @@ public class TouristLogActivity extends AppCompatActivity implements Runnable {
                     TouristActivity.user = user;
                     toast = Toast.makeText(TouristLogActivity.this, "登陆成功！", Toast.LENGTH_SHORT);
                     toast.show();
+                   PushMessage push = MyPushMessageReceiver.msg;
+                    push.setid(user.getid());
+                    Thread thread = new Thread(new PushThread(PushMessage.PUSHBIND, push, getString(R.string.server_address), Integer.parseInt(getString(R.string.server_port)), TouristLogActivity.this));
+                    thread.start();
                     finish();
                     break;
                 case User.LOG_ERROR:

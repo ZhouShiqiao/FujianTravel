@@ -8,6 +8,8 @@ import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
 
 import edu.fjnu.fujiantravel.R;
+import edu.fjnu.fujiantravel.activity.tourist.TouristActivity;
+import edu.fjnu.fujiantravel.activity.tourist.TouristLogActivity;
 import edu.fjnu.fujiantravel.push.Utils;
 
 import java.util.Timer;
@@ -24,7 +26,7 @@ public class LoadActivity extends Activity {
         Timer timer = new Timer();
 
         PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,
-                Utils.getMetaValue(LoadActivity.this, "api_key"));
+                Utils.getMetaValue(this, "api_key"));
 
         TimerTask tast = new TimerTask() {
             @Override

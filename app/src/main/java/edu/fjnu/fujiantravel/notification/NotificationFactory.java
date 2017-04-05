@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.activity.OrderSimpleInfoActivity;
+import edu.fjnu.fujiantravel.activity.SimpleUserInfoActivity;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.message.MyMessage;
 import edu.fjnu.fujiantravel.order.Order;
@@ -32,6 +33,9 @@ public class NotificationFactory {
             case Order.PUSHORDERTOGUIDE:
                 this.buildPushOrderToGuideNotification(msg.getdetail(), context);
                 break;
+            case Order.PUSHORDERTOTOURIST:
+                this.buildPushOrderToTouristNotification(msg.getdetail(), context);
+                break;
         }
     }
 
@@ -45,9 +49,23 @@ public class NotificationFactory {
         notification.setSmallIcon(R.mipmap.ic_launcher);
 
         Intent intent = new Intent().setClass(context, OrderSimpleInfoActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("id", str);
-        intent.putExtras(bundle);
+        intent.putExtra("id", str);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        notification.setContentIntent(pendingIntent);
+
+        notification.notifybuild();
+    }
+    private void buildPushOrderToTouristNotification(String str,Context context){
+        MyNotification notification = new MyNotification(context);
+        notification.setContentTitle(context.getString(R.string.order_notify_title));
+        notification.setDefaults(Notification.DEFAULT_SOUND);
+        notification.setAutoCancel(true);
+        notification.setTicker(context.getString(R.string.order_receive_ticker));
+        notification.setContentText(context.getString(R.string.order_receive_notify_tourist));
+        notification.setSmallIcon(R.mipmap.ic_launcher);
+
+        Intent intent = new Intent().setClass(context, SimpleUserInfoActivity.class);
+        intent.putExtra("id", str);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         notification.setContentIntent(pendingIntent);
 

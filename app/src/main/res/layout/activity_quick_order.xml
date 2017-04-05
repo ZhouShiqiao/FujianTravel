@@ -49,7 +49,8 @@
             android:textSize="18dp"
             android:id="@+id/quickorder_playtime"
             android:drawableLeft="@drawable/countdown"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,7 +60,7 @@
             android:textSize="18dp"
             android:id="@+id/quickorder_peoplenumber"
             android:gravity="center_vertical"
-            android:drawableLeft="@drawable/friend"/>
+            android:drawableLeft="@drawable/friend" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -70,6 +71,18 @@
             android:background="@drawable/shape_corner"
             android:padding="5dp"
             android:layout_margin="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@drawable/outline"
+            android:text="预计价格"
+            android:textSize="18dp"
+            android:id="@+id/quickorder_predictcast"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/money_bag_fill"
+            android:visibility="gone"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

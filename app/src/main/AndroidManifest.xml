@@ -58,7 +58,7 @@
         android:theme="@style/AppTheme.NoActionBar">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="Q69dAFgCVtG1X37GdRgYQi1NglfX2bkx" />
+            android:value="1VFdaKh0QSCbPvKE9Uq26V8n" />
 
         <activity android:name=".activity.LoadActivity">
             <intent-filter>

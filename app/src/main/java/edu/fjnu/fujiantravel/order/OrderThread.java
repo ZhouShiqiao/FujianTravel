@@ -43,21 +43,22 @@ public class OrderThread extends Thread {
 
     }
 
-    public OrderThread(int type, Order order, String address, int port, Context context,Handler handler) {
+    public OrderThread(int type, Order order, String address, int port, Context context, Handler handler) {
         this.type = type;
         this.order = order;
         this.address = address;
         this.port = port;
         this.context = context;
-        this.handler= handler;
+        this.handler = handler;
     }
 
-    public OrderThread(int type, OrderUpdate orderupdate, String address, int port, Context context) {
+    public OrderThread(int type, OrderUpdate orderupdate, String address, int port, Context context, Handler handler) {
         this.type = type;
         this.orderupdate = orderupdate;
         this.address = address;
         this.port = port;
         this.context = context;
+        this.handler = handler;
     }
 
     public OrderThread(int type, String orderid, String address, int port, Context context, Handler handler) {
@@ -81,6 +82,9 @@ public class OrderThread extends Thread {
                 case Order.QUERYORDER_SINGLE:
                     querysingleorder();
                     break;
+                case Order.RECEIVEORDER:
+                    receiveorder();
+                    break;
             }
             reJsonStr = in.readUTF();
             remsg = (MyMessage) Json.JsontoObject(reJsonStr, msg.getClass());
@@ -97,6 +101,9 @@ public class OrderThread extends Thread {
                     break;
                 case Order.QUERYORDER_ERROR:
                     queryordererror();
+                    break;
+                case Order.UPDATEORDRE_SUCCESS:
+                    updateordersuccess();
                     break;
             }
         } catch (IOException e) {
@@ -120,37 +127,56 @@ public class OrderThread extends Thread {
         out.flush();
     }
 
-    private void createordersuccess() throws IOException {
+    private void receiveorder() throws IOException {
+        this.msg.sethead(Order.RECEIVEORDER);
+        this.msg.setdetail(Json.ObjecttoJson(orderupdate));
+        this.JsonStr = Json.ObjecttoJson(msg);
+        out.writeUTF(JsonStr);
+        out.flush();
+
+    }
+
+    private void updateordersuccess() throws IOException {
         Message message = new Message();
-        message.what= Order.CREATRORDER_SUCCESS;
+        message.what = Order.UPDATEORDRE_SUCCESS;
         handler.sendMessage(message);
         clientover();
     }
-    private void createordererror()throws IOException{
+
+    private void createordersuccess() throws IOException {
         Message message = new Message();
-        message.what=Order.CREATRORDER_ERROR;
+        message.what = Order.CREATRORDER_SUCCESS;
+        handler.sendMessage(message);
+        clientover();
+    }
+
+    private void createordererror() throws IOException {
+        Message message = new Message();
+        message.what = Order.CREATRORDER_ERROR;
         handler.sendMessage(message);
         clientover();
     }
 
     private void queryordersuccess() throws IOException {
-        clientover();
         Message message = new Message();
-        message.what = remsg.gethead();
+        message.what = Order.QUERYORDER_SUCCESS;
         message.obj = remsg.getdetail();
         handler.sendMessage(message);
+        clientover();
     }
-    private void queryordererror()throws IOException{
+
+    private void queryordererror() throws IOException {
         Message message = new Message();
         message.what = Order.QUERYORDER_ERROR;
+        message.obj = remsg.getdetail();
         handler.sendMessage(message);
         clientover();
     }
 
     private void clientover() throws IOException {
-        msg.sethead(Client.CLINT_FINISH);
-        msg.setdetail(null);
-        out.writeUTF(Json.ObjecttoJson(msg));
+        MyMessage finishmsg = new MyMessage();
+        finishmsg.sethead(Client.CLINT_FINISH);
+        out.writeUTF(Json.ObjecttoJson(finishmsg));
         out.flush();
         socket.close();
         out.close();

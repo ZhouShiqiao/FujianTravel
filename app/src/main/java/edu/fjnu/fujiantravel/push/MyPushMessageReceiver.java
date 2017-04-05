@@ -31,6 +31,7 @@ import java.util.List;
  * Created by Administrator on 2017/2/24 0024.
  */
 public class MyPushMessageReceiver extends PushMessageReceiver {
+   public static PushMessage msg;
     /**
      * TAG to Log
      */
@@ -64,16 +65,15 @@ public class MyPushMessageReceiver extends PushMessageReceiver {
         }
         // Demo更新界面展示代码，应用请在这里加入自己的处理逻辑
         updateContent(context, responseString);*/
-        PushMessage msg = new PushMessage();
+        msg = new PushMessage();
         msg.setappId(appid);
         msg.setchannelId(channelId);
         msg.setrequestId(requestId);
         msg.setuserId(userId);
-        msg.setid(TouristActivity.getUser().getid());
-        Thread thread = new Thread(new PushThread(PushMessage.PUSHBIND, msg,
+        /*Thread thread = new Thread(new PushThread(PushMessage.PUSHBIND, msg,
                 context.getString(R.string.server_address),
                 Integer.parseInt(context.getString(R.string.server_port)),context));
-        thread.start();
+        thread.start();*/
     }
 
     /**
