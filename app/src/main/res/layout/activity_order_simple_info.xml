@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="游玩时间"
             android:textSize="18dp"
-            android:id="@+id/simpleorderinfo_palytime"
+            android:id="@+id/simpleorderinfo_playtime"
             android:layout_margin="5dp"/>
         <TextView
             android:layout_width="match_parent"

@@ -2,6 +2,8 @@ package edu.fjnu.fujiantravel.activity.tourist;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -111,4 +113,9 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+        }
+    };
 }

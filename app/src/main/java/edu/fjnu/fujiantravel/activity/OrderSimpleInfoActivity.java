@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,10 +24,18 @@ import edu.fjnu.fujiantravel.order.OrderThread;
 import edu.fjnu.fujiantravel.order.OrderUpdate;
 
 public class OrderSimpleInfoActivity extends AppCompatActivity implements View.OnClickListener {
-    private Map<String, TextView> TextViewMap = new HashMap<>();
     private Button ensurebutton;
     private Button cancelbutton;
     private ImageButton backbutton;
+
+    private TextView orderidtext;
+    private TextView touristidtext;
+    private TextView begintimetext;
+    private TextView scenictext;
+    private TextView routetext;
+    private TextView playtimetext;
+    private TextView peoplenumbertext;
+    private TextView remarktext;
 
     private String id;
     private Order order = new Order();
@@ -51,14 +61,14 @@ public class OrderSimpleInfoActivity extends AppCompatActivity implements View.O
         ensurebutton = (Button) findViewById(R.id.simpleorderinfo_ensurebutton);
         cancelbutton = (Button) findViewById(R.id.simpleorderinfo_cancelbutton);
         backbutton = (ImageButton) findViewById(R.id.simpleorderinfo_back);
-        TextViewMap.put("orderid", (TextView) findViewById(R.id.simpleorderinfo_orderid));
-        TextViewMap.put("touristid", (TextView) findViewById(R.id.simpleorderinfo_touristid));
-        TextViewMap.put("begintime", (TextView) findViewById(R.id.simpleorderinfo_begintime));
-        TextViewMap.put("senic", (TextView) findViewById(R.id.simpleorderinfo_scenic));
-        TextViewMap.put("route", (TextView) findViewById(R.id.simpleorderinfo_route));
-        TextViewMap.put("playtime", (TextView) findViewById(R.id.simpleorderinfo_palytime));
-        TextViewMap.put("peoplenumber", (TextView) findViewById(R.id.simpleorderinfo_peoplenumber));
-        TextViewMap.put("remark", (TextView) findViewById(R.id.simpleorderinfo_remark));
+        orderidtext =(TextView)findViewById(R.id.simpleorderinfo_orderid);
+        touristidtext=(TextView)findViewById(R.id.simpleorderinfo_touristid);
+        begintimetext=(TextView)findViewById(R.id.simpleorderinfo_begintime);
+        scenictext=(TextView)findViewById(R.id.simpleorderinfo_scenic);
+        routetext=(TextView)findViewById(R.id.simpleorderinfo_route);
+        playtimetext=(TextView)findViewById(R.id.simpleorderinfo_playtime);
+        peoplenumbertext=(TextView)findViewById(R.id.simpleorderinfo_peoplenumber);
+        remarktext=(TextView)findViewById(R.id.simpleorderinfo_remark);
     }
 
     private void initview() {
@@ -68,13 +78,12 @@ public class OrderSimpleInfoActivity extends AppCompatActivity implements View.O
     }
 
     private void initdate() {
-        TextViewMap.get("orderid").setText(order.getorderid());
-        /*TextViewMap.get("touristid").setText(order.gettouristid());
-        TextViewMap.get("begintime").setText("now");
-        //TextViewMap.get("senic").setText(order.getsenic());
-        TextViewMap.get("playtime").setText(order.getplaytime());
-        TextViewMap.get("peoplenumber").setText(order.getPeoplenumbers());
-        TextViewMap.get("remark").setText(order.getremark());*/
+        orderidtext.setText(order.getorderid());
+        touristidtext.setText(order.gettouristid());
+        playtimetext.setText(order.getplaytime()+"小时");
+        peoplenumbertext.setText(order.getPeoplenumbers()+"人");
+        remarktext.setText(order.getremark());
+        scenictext.setText(order.getsenic());
     }
 
     public void onClick(View v) {

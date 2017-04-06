@@ -93,5 +93,6 @@ public class PushThread extends Thread {
         tags.add("tourist");
         tags.add("guide");
         PushManager.setTags(context.getApplicationContext(), tags);*/
+
     }
 }

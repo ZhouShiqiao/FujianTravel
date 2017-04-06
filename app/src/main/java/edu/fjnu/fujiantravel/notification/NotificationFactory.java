@@ -9,6 +9,7 @@ import android.os.Bundle;
 import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.activity.OrderSimpleInfoActivity;
 import edu.fjnu.fujiantravel.activity.SimpleUserInfoActivity;
+import edu.fjnu.fujiantravel.activity.tourist.TouristActivity;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.message.MyMessage;
 import edu.fjnu.fujiantravel.order.Order;
@@ -31,7 +32,11 @@ public class NotificationFactory {
         msg = (MyMessage) Json.JsontoObject(Jsonstr, msg.getClass());
         switch (msg.gethead()) {
             case Order.PUSHORDERTOGUIDE:
-                this.buildPushOrderToGuideNotification(msg.getdetail(), context);
+                Order order = new Order();
+                order = (Order) Json.JsontoObject(msg.getdetail(), order.getClass());
+                if (order.gettouristid() != TouristActivity.getUser().getid()) {
+                    this.buildPushOrderToGuideNotification(order.getorderid(), context);
+                }
                 break;
             case Order.PUSHORDERTOTOURIST:
                 this.buildPushOrderToTouristNotification(msg.getdetail(), context);
@@ -55,7 +60,8 @@ public class NotificationFactory {
 
         notification.notifybuild();
     }
-    private void buildPushOrderToTouristNotification(String str,Context context){
+
+    private void buildPushOrderToTouristNotification(String str, Context context) {
         MyNotification notification = new MyNotification(context);
         notification.setContentTitle(context.getString(R.string.order_notify_title));
         notification.setDefaults(Notification.DEFAULT_SOUND);

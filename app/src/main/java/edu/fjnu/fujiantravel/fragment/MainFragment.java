@@ -71,6 +71,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             case R.id.modelchangebutton:
                 intent.setClass(context, ChooseActivity.class);
                 getActivity().finish();
+                context.startActivity(intent);
                 break;
             case R.id.tourist_button3:
                 intent.setClass(context, MakeOrderActivity.class);

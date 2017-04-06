@@ -1,11 +1,14 @@
 package edu.fjnu.fujiantravel.user;
 
+import android.os.Handler;
+
 import edu.fjnu.fujiantravel.message.MyMessage;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+
 
 /**
  * Created by Administrator on 2017/3/2 0002.
@@ -25,6 +28,8 @@ public class UserThread extends Thread {
 
     private String address;
     private int port;
+
+    private Handler handler;
 
     public UserThread() {
 
@@ -48,6 +53,10 @@ public class UserThread extends Thread {
                 case User.USERLOG:
                     break;
                 case User.EDITUSERINFO:
+                    break;
+                case Tourist.TOURISTLOG:
+                    break;
+                case Guide.GUIDELOG:
                     break;
             }
         } catch (IOException e) {
