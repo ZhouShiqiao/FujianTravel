@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import edu.fjnu.fujiantravel.R;
+import edu.fjnu.fujiantravel.activity.tourist.TouristActivity;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.order.Order;
 import edu.fjnu.fujiantravel.order.OrderThread;
@@ -98,7 +99,7 @@ public class OrderSimpleInfoActivity extends AppCompatActivity implements View.O
                 OrderUpdate update = new OrderUpdate();
                 update.setorderID(id);
                 update.sethead("guideID");
-                update.setdetail("zsq0823");
+                update.setdetail(TouristActivity.getUser().getid());
                 Thread thread = new Thread(new OrderThread(Order.RECEIVEORDER, update,
                         getString(R.string.server_address), Integer.parseInt(getString(R.string.server_port)),
                         OrderSimpleInfoActivity.this, handler));
@@ -122,6 +123,7 @@ public class OrderSimpleInfoActivity extends AppCompatActivity implements View.O
                     Toast.makeText(OrderSimpleInfoActivity.this, "接单成功请与游客联系", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent();
                     intent.setClass(OrderSimpleInfoActivity.this,SimpleUserInfoActivity.class);
+                    intent.putExtra("id", order.gettouristid());
                     startActivity(intent);
                     finish();
                     break;

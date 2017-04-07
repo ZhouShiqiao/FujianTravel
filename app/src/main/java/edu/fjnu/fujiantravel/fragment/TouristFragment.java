@@ -25,6 +25,8 @@ import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.activity.RegisterActivity;
 import edu.fjnu.fujiantravel.activity.tourist.TouristActivity;
 import edu.fjnu.fujiantravel.activity.tourist.TouristLogActivity;
+import edu.fjnu.fujiantravel.activity.tourist.TouristOrderActivity;
+import edu.fjnu.fujiantravel.user.Tourist;
 
 /**
  * Created by Administrator on 2017/1/22 0022.
@@ -76,6 +78,9 @@ public class TouristFragment extends Fragment implements View.OnClickListener {
     private void initview() {
         log.setOnClickListener(this);
         register.setOnClickListener(this);
+        order.setOnClickListener(this);
+        collect.setOnClickListener(this);
+        setting.setOnClickListener(this);
         whetherlog();
     }
 
@@ -109,6 +114,8 @@ public class TouristFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.tourist_order:
+                intent.setClass(context, TouristOrderActivity.class);
+                startActivity(intent);
                 break;
             case R.id.tourist_collect:
                 break;

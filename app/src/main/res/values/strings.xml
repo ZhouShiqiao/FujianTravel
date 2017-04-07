@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">FujianTravle</string>
     <string name="title_activity_maps">Map</string>
-    <string name="server_address">172.17.195.95</string>
+    <string name="server_address">192.168.190.1</string>
     <string name="server_port">1314</string>
     <string name="guide_beforelog_hint">用户您还没有登陆，请先登陆！</string>
     <string name="order_notify_title">订单通知</string>

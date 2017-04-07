@@ -19,6 +19,10 @@ public class User {
     // update user information
     public final static int EDITUSERINFO = 12;
 
+    public final static int QUERYUSERINFO = 13;
+    public final static int QUERY_SUCCESS = 130;
+    public final static int QUERY_ERROR = -130;
+
     private String id;
     private String passwd;
     private int tourist;

@@ -34,7 +34,7 @@ public class NotificationFactory {
             case Order.PUSHORDERTOGUIDE:
                 Order order = new Order();
                 order = (Order) Json.JsontoObject(msg.getdetail(), order.getClass());
-                if (order.gettouristid() != TouristActivity.getUser().getid()) {
+                if (!order.gettouristid().equals(TouristActivity.getUser().getid())) {
                     this.buildPushOrderToGuideNotification(order.getorderid(), context);
                 }
                 break;

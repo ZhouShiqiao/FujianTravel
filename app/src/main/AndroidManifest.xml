@@ -147,7 +147,8 @@
             android:value="1VFdaKh0QSCbPvKE9Uq26V8n" />
 
         <activity android:name=".activity.OrderSimpleInfoActivity" />
-        <activity android:name=".activity.SimpleUserInfoActivity"></activity>
+        <activity android:name=".activity.SimpleUserInfoActivity" />
+        <activity android:name=".activity.tourist.TouristOrderActivity"></activity>
     </application>
 
 </manifest>
