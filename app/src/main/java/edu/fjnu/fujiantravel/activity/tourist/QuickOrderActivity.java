@@ -23,6 +23,7 @@ import edu.fjnu.fujiantravel.R;
 import edu.fjnu.fujiantravel.message.Json;
 import edu.fjnu.fujiantravel.order.Order;
 import edu.fjnu.fujiantravel.order.OrderThread;
+import edu.fjnu.fujiantravel.scenic.Scenic;
 import edu.fjnu.fujiantravel.user.Tourist;
 import edu.fjnu.fujiantravel.user.User;
 
@@ -30,6 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuickOrderActivity extends AppCompatActivity implements View.OnClickListener {
+    private static QuickOrderActivity instance;
+
     private Toolbar toolbar;
     private TextView choosesenic;
     private TextView playtime;
@@ -40,14 +43,13 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
 
     private int numbers;
     private int time;
+    private Scenic scenic;
 
     private EditText numbersedit;
     private EditText timeedit;
 
     private Order order;
     private User user;
-
-    private static Map<String, String> attribute;
 
     private String address;
     private int port;
@@ -56,9 +58,14 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quick_order);
+        instance = this;
         initdata();
         findview();
         initview();
+    }
+
+    public static QuickOrderActivity getInstance(){
+        return instance;
     }
 
     protected void onRestart() {
@@ -101,9 +108,7 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
     private void initdata() {
         address = getString(R.string.server_address);
         port = Integer.parseInt(this.getString(R.string.server_port));
-        attribute = new HashMap<String, String>();
-        attribute.put("senic", "");
-        attribute.put("begintime", "now");
+        this.scenic = null;
         this.numbers = 0;
         this.time = 0;
     }
@@ -118,6 +123,10 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
                     Toast.makeText(this, "还没有登陆，请先登陆！", Toast.LENGTH_SHORT).show();
                     intent.setClass(this, TouristLogActivity.class);
                     startActivity(intent);
+                    return;
+                }
+                if (scenic == null | time <= 0 | numbers <= 0) {
+                    Toast.makeText(this, "订单信息不全，请填写完整！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 createorder();
@@ -139,23 +148,14 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    public static void setorderinfo(String key, String value) {
-        attribute.put(key, value);
-    }
 
     private void updateorderinfo() {
         if (time > 0)
             playtime.setText(time + "小时");
         if (numbers > 0)
             peoplenumber.setText(numbers + "人");
-        if (attribute.get("begintime").toString().equals("now"))
-            begintime.setText("立即游玩");
-        else
-            begintime.setText(attribute.get("begintime"));
-        if (attribute.get("senic") == null || attribute.get("senic").toString().length() <= 0)
-            choosesenic.setText("请选择景点");
-        else
-            choosesenic.setText(attribute.get("senic"));
+        if (scenic != null)
+            choosesenic.setText(scenic.getname());
     }
 
     private void createorder() {
@@ -177,6 +177,9 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
                     break;
                 case Order.CREATRORDER_ERROR:
                     Toast.makeText(QuickOrderActivity.this, "订单创建失败。", Toast.LENGTH_SHORT).show();
+                    break;
+                case Scenic.QUERYSCENIC_SUCCESS:
+                    scenic = (Scenic) msg.obj;
                     break;
             }
         }
@@ -222,5 +225,9 @@ public class QuickOrderActivity extends AppCompatActivity implements View.OnClic
                 )
                 .setNegativeButton("取消", null)
                 .show();
+    }
+
+    public Handler getHandler() {
+        return handler;
     }
 }

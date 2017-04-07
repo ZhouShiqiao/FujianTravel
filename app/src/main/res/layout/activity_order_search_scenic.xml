@@ -39,10 +39,11 @@
             android:layout_alignParentRight="true"
             android:text="取消"
             android:gravity="center"
-            android:id="@+id/ordersenic_cancel"/>
+            android:id="@+id/ordersenic_cancel" />
     </RelativeLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ordersenic_seniclist"/>
+        android:id="@+id/ordersenic_seniclist"
+        />
 </LinearLayout>

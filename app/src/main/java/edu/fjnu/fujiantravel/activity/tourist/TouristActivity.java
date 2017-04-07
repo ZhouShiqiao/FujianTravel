@@ -116,6 +116,7 @@ public class TouristActivity extends AppCompatActivity implements View.OnClickLi
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
+
         }
     };
 }

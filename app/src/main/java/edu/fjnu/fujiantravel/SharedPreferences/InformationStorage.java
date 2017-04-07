@@ -32,16 +32,33 @@ public class InformationStorage {
         editor.putInt("state", state);
         editor.commit();
     }
+    public void databaseinfo(Context context){
+        SharedPreferences sp = context.getSharedPreferences("sp_databaseinfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor =sp.edit();
+        editor.putInt("state",0);
+        editor.commit();
+    }
+
+    public Boolean initdatabase(Context context) {
+        SharedPreferences sp = context.getSharedPreferences("sp_databaseinfo", Context.MODE_PRIVATE);
+        if (sp.getInt("state", 0) == 1)
+            return true;
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("state", 1);
+        editor.commit();
+        return false;
+    }
 
     public Boolean autolog(Context context) {
-        SharedPreferences sp = context.getSharedPreferences("sp_demo", Context.MODE_PRIVATE);
+        SharedPreferences sp = context.getSharedPreferences("sp_loginfo", Context.MODE_PRIVATE);
         if (sp.getInt("state", 0) != User.LOG_SUCCESS)
             return false;
         User user = new User();
         user.setid(sp.getString("id", null));
         user.setpasswd(sp.getString("password", null));
-        Thread thread = new Thread(new UserThread(User.USERLOG,user, context.getString(R.string.server_address),
+        Thread thread = new Thread(new UserThread(User.USERLOG, user, context.getString(R.string.server_address),
                 Integer.parseInt(context.getString(R.string.server_port))));
+        thread.start();
         return true;
     }
 }
